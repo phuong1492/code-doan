@@ -107,6 +107,12 @@ public class GetData {
 	// ma tran khoang cach
 	private static float[][] creatMatrixDistance(int n, List<Node> l) {
 		float[][] matrix = new float[100][100];
+//		float[][] matrix = {{0f, 1f, Float.MAX_VALUE, Float.MAX_VALUE, 2f},
+//				{Float.MAX_VALUE, 0f, 4f, Float.MAX_VALUE, Float.MAX_VALUE},
+//				{Float.MAX_VALUE,Float.MAX_VALUE, 0f, 2f, Float.MAX_VALUE},
+//				{Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE, 0f, Float.MAX_VALUE},
+//				{Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE,3f,Float.MAX_VALUE}
+//				};
 		int i, j;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
