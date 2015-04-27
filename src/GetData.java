@@ -57,12 +57,12 @@ public class GetData {
 			String coordinates = line.substring(0, line.length() - 1);
 			int a = coordinates.indexOf(" ");
 			int splitpoint = coordinates.indexOf(',');
-			String s = coordinates.substring(0, a);
+			int s = Integer.parseInt(coordinates.substring(0, a));
 			int x = Integer.parseInt(coordinates.substring(a + 1, splitpoint));
 			int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
 			node.add(new Node(x, y, s));
 			line = br.readLine();
-			System.out.println(s + " " + x + " " + y);
+			System.out.println("Node"+ s + " " + x + " " + y);
 			// System.out.println("Line: "+line);
 		}
 		br.readLine(); // read this ];
@@ -95,7 +95,7 @@ public class GetData {
 	public void Print_List() {
 		for (int i = 0; i < LISTNODE.size(); i++) {
 			System.out.println(LISTNODE.get(i).getX() + " "
-					+ LISTNODE.get(i).getY() + " " + LISTNODE.get(i).getName());
+					+ LISTNODE.get(i).getY() + " " + LISTNODE.get(i).getId());
 		}
 	}
 	public void Print_Link() {
@@ -123,7 +123,7 @@ public class GetData {
 		}
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				System.out.printf("%f\t", matrix[i][j]);
+				System.out.printf(" %f\t",matrix[i][j]);
 			}
 			System.out.println();
 		}

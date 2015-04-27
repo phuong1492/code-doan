@@ -2,23 +2,24 @@
 public class Node {
 	private int x;
 	private int y;
-	private String name;
+//	private String name;
+	private int id;
 	public Node(int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
-	public Node(int x, int y, String name){
+	public Node(int x, int y, int id){
 		super();
 		this.x = x;
 		this.y = y;
-		this.name = name;
+		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public int getId() {
+		return id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getX() {
 		return x;
@@ -34,6 +35,6 @@ public class Node {
 	}
 	@Override
 	public String toString() {
-		return  name+" :[x=" + x + ", y=" + y + "]";
+		return  "Node"+id+" :[x=" + x + ", y=" + y + "]";
 	}
 }
