@@ -10,6 +10,7 @@ public class GetData {
 	public List<Node> LISTNODE;
 	public float[][] DISTANCE;
 	public List<Edge> EDGE;
+	public List<Request> REQUEST;
 
 	public void setEmptyAll() {
 		N_NODE = 0;
@@ -30,6 +31,7 @@ public class GetData {
 			N_NODE = readNumber(br.readLine());
 			LISTNODE = readPosition(br, N_NODE);
 			EDGE = readLink(br, N_NODE);
+			REQUEST = readRequests(br);
 			DISTANCE = creatMatrixDistance(N_NODE, LISTNODE);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -129,5 +131,62 @@ public class GetData {
 		}
 		return matrix;
 	}
-
+	
+	private static List<Request> readRequests(BufferedReader br)
+			throws IOException {
+		List<Request> request = new ArrayList<Request>();
+		String line = " ";
+		//br.readLine(); // read this R=[
+		System.out.print(line);
+		line = br.readLine();
+		while (!line.equals("]")) {
+			String coordinates = line.substring(0, line.length() - 1);
+			int splitpoint = coordinates.indexOf(',');
+			int a = coordinates.indexOf(" ");
+			//String s = coordinates.substring(0, a);
+			int x = Integer.parseInt(coordinates.substring(a +1 , splitpoint));
+			int y = Integer.parseInt(coordinates.substring(splitpoint+1));
+			//System.out.println(y);
+			Request re = new Request(x,y);
+			request.add(re);
+			line = br.readLine();
+			// System.out.println("Line: "+line);
+		}
+		for (int i = 0; i < request.size(); i++) {
+			System.out.println(request.get(i).getSrc() +" "+ request.get(i).getDest());
+		}
+		br.readLine(); // read this ];
+		return request;
+	}
+	
+	
+	public static class Request{
+		
+		private int src;
+		
+		private int dest;
+		
+		public Request(int src, int dest){
+			this.dest = dest;
+			this.src = src;
+		}
+		
+		public int getSrc() {
+			return src;
+		}
+		public void setSrc(int src) {
+			this.src = src;
+		}
+		
+		public int getDest() {
+			return dest;
+		}
+		public void setDest(int dest) {
+			this.dest = dest;
+		}
+		public void String() {
+			System.out.println("Working path from "+src+ " to " + dest);
+		}
+	}
 }
+

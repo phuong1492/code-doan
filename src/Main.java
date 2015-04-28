@@ -18,12 +18,16 @@ public class Main {
 //		for (int i = 0; i < g.dijkstra(0, 4).length; i++) {
 //			System.out.println(g.dijkstra(0, 4)[i]);
 //		}
+		for (int i = 0; i < data.REQUEST.size(); i++) {
+		data.REQUEST.get(i).String();
 		java.util.List<Node> list = new ArrayList<Node>();
-		list = g.dijkstra(g.node.get(0), g.node.get(2));
-		for (int i = list.size()-1; i >= 0; i--) {
-			System.out.print(list.get(i)+"\t");
+		list = g.dijkstra(g.node.get(data.REQUEST.get(i).getSrc()), g.node.get(data.REQUEST.get(i).getDest()));
+		for (int j = list.size()-1; j >= 0; j--) {
+			System.out.print(list.get(j)+"\t");
 		}
+		System.out.println();
 //		System.out.println(g.adj(g.node.get(3)));
+	}
 	}
 
 }
