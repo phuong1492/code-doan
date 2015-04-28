@@ -23,7 +23,7 @@ public class GetData {
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(
-						"/home/phuong-hoang/Desktop/Data/Archive/test.txt"));
+						"/home/phuong-hoang/Desktop/Data/Archive/test4.txt"));
 			} catch (FileNotFoundException exc) {
 				System.out.println("File not found!");
 				return;
@@ -64,7 +64,7 @@ public class GetData {
 			int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
 			node.add(new Node(x, y, s));
 			line = br.readLine();
-			System.out.println("Node"+ s + " " + x + " " + y);
+			System.out.println("Node" + s + " " + x + " " + y);
 			// System.out.println("Line: "+line);
 		}
 		br.readLine(); // read this ];
@@ -75,7 +75,7 @@ public class GetData {
 			throws IOException {
 		List<Edge> edge = new ArrayList<Edge>();
 		String line = " ";
-		//br.readLine(); // read this P=[
+		// br.readLine(); // read this P=[
 		System.out.print(line);
 		line = br.readLine();
 		while (!line.equals("]")) {
@@ -83,9 +83,9 @@ public class GetData {
 			int splitpoint = coordinates.indexOf(',');
 			int a = coordinates.indexOf(" ");
 			String s = coordinates.substring(0, a);
-			int x = Integer.parseInt(coordinates.substring(a +1 , splitpoint));
-			int y = Integer.parseInt(coordinates.substring(splitpoint+1));
-			//System.out.println(y);
+			int x = Integer.parseInt(coordinates.substring(a + 1, splitpoint));
+			int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
+			// System.out.println(y);
 			edge.add(new Edge(s, x, y));
 			line = br.readLine();
 			// System.out.println("Line: "+line);
@@ -93,28 +93,31 @@ public class GetData {
 		br.readLine(); // read this ];
 		return edge;
 	}
-	
+
 	public void Print_List() {
 		for (int i = 0; i < LISTNODE.size(); i++) {
 			System.out.println(LISTNODE.get(i).getX() + " "
 					+ LISTNODE.get(i).getY() + " " + LISTNODE.get(i).getId());
 		}
 	}
+
 	public void Print_Link() {
 		for (int i = 0; i < EDGE.size(); i++) {
-			System.out.println(EDGE.get(i).getSource() +" "+ EDGE.get(i).getDestination());
+			System.out.println(EDGE.get(i).getSource() + " "
+					+ EDGE.get(i).getDestination());
 		}
 	}
 
 	// ma tran khoang cach
 	private static float[][] creatMatrixDistance(int n, List<Node> l) {
 		float[][] matrix = new float[100][100];
-//		float[][] matrix = {{0f, 1f, Float.MAX_VALUE, Float.MAX_VALUE, 2f},
-//				{Float.MAX_VALUE, 0f, 4f, Float.MAX_VALUE, Float.MAX_VALUE},
-//				{Float.MAX_VALUE,Float.MAX_VALUE, 0f, 2f, Float.MAX_VALUE},
-//				{Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE, 0f, Float.MAX_VALUE},
-//				{Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE,3f,Float.MAX_VALUE}
-//				};
+		// float[][] matrix = {{0f, 1f, Float.MAX_VALUE, Float.MAX_VALUE, 2f},
+		// {Float.MAX_VALUE, 0f, 4f, Float.MAX_VALUE, Float.MAX_VALUE},
+		// {Float.MAX_VALUE,Float.MAX_VALUE, 0f, 2f, Float.MAX_VALUE},
+		// {Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE, 0f,
+		// Float.MAX_VALUE},
+		// {Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE,3f,Float.MAX_VALUE}
+		// };
 		int i, j;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
@@ -125,68 +128,70 @@ public class GetData {
 		}
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				System.out.printf(" %f\t",matrix[i][j]);
+				System.out.printf(" %f\t", matrix[i][j]);
 			}
 			System.out.println();
 		}
 		return matrix;
 	}
-	
+
 	private static List<Request> readRequests(BufferedReader br)
 			throws IOException {
 		List<Request> request = new ArrayList<Request>();
 		String line = " ";
-		//br.readLine(); // read this R=[
+		// br.readLine(); // read this R=[
 		System.out.print(line);
 		line = br.readLine();
 		while (!line.equals("]")) {
 			String coordinates = line.substring(0, line.length() - 1);
 			int splitpoint = coordinates.indexOf(',');
 			int a = coordinates.indexOf(" ");
-			//String s = coordinates.substring(0, a);
-			int x = Integer.parseInt(coordinates.substring(a +1 , splitpoint));
-			int y = Integer.parseInt(coordinates.substring(splitpoint+1));
-			//System.out.println(y);
-			Request re = new Request(x,y);
+			// String s = coordinates.substring(0, a);
+			int x = Integer.parseInt(coordinates.substring(a + 1, splitpoint));
+			int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
+			// System.out.println(y);
+			Request re = new Request(x, y);
 			request.add(re);
 			line = br.readLine();
 			// System.out.println("Line: "+line);
 		}
 		for (int i = 0; i < request.size(); i++) {
-			System.out.println(request.get(i).getSrc() +" "+ request.get(i).getDest());
+			System.out.println(request.get(i).getSrc() + " "
+					+ request.get(i).getDest());
 		}
 		br.readLine(); // read this ];
 		return request;
 	}
-	
-	
-	public static class Request{
-		
+
+	public static class Request {
+
 		private int src;
-		
+
 		private int dest;
-		
-		public Request(int src, int dest){
+
+		public Request(int src, int dest) {
 			this.dest = dest;
 			this.src = src;
 		}
-		
+
 		public int getSrc() {
 			return src;
 		}
+
 		public void setSrc(int src) {
 			this.src = src;
 		}
-		
+
 		public int getDest() {
 			return dest;
 		}
+
 		public void setDest(int dest) {
 			this.dest = dest;
 		}
+
 		public void String() {
-			System.out.println("Working path from "+src+ " to " + dest);
+			System.out.println("Working path from " + src + " to " + dest);
 		}
 	}
 }
-
