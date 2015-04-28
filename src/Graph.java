@@ -176,4 +176,12 @@ public class Graph {
 	private boolean isValidNode(Node u) {
 		return (u.getId() >= 0) && (u.getId() <= this.v - 1);
 	}
+	
+	public float Cost(){
+		float s = 0;
+		for (int i = 0; i < edge.size(); i++) {
+			s += distance[edge.get(i).getSource()][edge.get(i).getDestination()];
+		}
+		return s;
+	}
 }

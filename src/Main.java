@@ -27,7 +27,9 @@ public class Main {
 		}
 		System.out.println();
 //		System.out.println(g.adj(g.node.get(3)));
+		
 	}
+		System.out.println("Chi phi toan mang: " + g.Cost());
 	}
 
 }
