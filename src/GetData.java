@@ -23,7 +23,7 @@ public class GetData {
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(
-						"/home/phuong-hoang/Desktop/Data/Archive/test4.txt"));
+						"/home/phuong-hoang/Desktop/Data/Archive/test1.txt"));
 			} catch (FileNotFoundException exc) {
 				System.out.println("File not found!");
 				return;
@@ -59,12 +59,14 @@ public class GetData {
 			String coordinates = line.substring(0, line.length() - 1);
 			int a = coordinates.indexOf(" ");
 			int splitpoint = coordinates.indexOf(',');
+			int dis = coordinates.indexOf('|');
 			int s = Integer.parseInt(coordinates.substring(0, a));
 			int x = Integer.parseInt(coordinates.substring(a + 1, splitpoint));
-			int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
-			node.add(new Node(x, y, s));
+			int y = Integer.parseInt(coordinates.substring(splitpoint + 1, dis));
+			int display = Integer.parseInt(coordinates.substring(dis + 1));
+			node.add(new Node(x, y, s, display));
 			line = br.readLine();
-			System.out.println("Node" + s + " " + x + " " + y);
+			System.out.println("Node" + s + " " + x + " " + y + " " + display);
 			// System.out.println("Line: "+line);
 		}
 		br.readLine(); // read this ];
@@ -111,13 +113,6 @@ public class GetData {
 	// ma tran khoang cach
 	private static float[][] creatMatrixDistance(int n, List<Node> l) {
 		float[][] matrix = new float[100][100];
-		// float[][] matrix = {{0f, 1f, Float.MAX_VALUE, Float.MAX_VALUE, 2f},
-		// {Float.MAX_VALUE, 0f, 4f, Float.MAX_VALUE, Float.MAX_VALUE},
-		// {Float.MAX_VALUE,Float.MAX_VALUE, 0f, 2f, Float.MAX_VALUE},
-		// {Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE, 0f,
-		// Float.MAX_VALUE},
-		// {Float.MAX_VALUE,Float.MAX_VALUE,Float.MAX_VALUE,3f,Float.MAX_VALUE}
-		// };
 		int i, j;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {

@@ -103,7 +103,7 @@ public class DrawGraph extends JPanel {
 		g2.setStroke(oldStroke);
 		g2.setColor(GRAPH_POINT_COLOR);
 		for (int i = 0; i < graphPoints.size(); i++) {
-			if(i != 2){
+			if(nodes.get(i).getDis() != 0){
 			int x = graphPoints.get(i).x - GRAPH_POINT_WIDTH / 2;
 			int y = graphPoints.get(i).y - GRAPH_POINT_WIDTH / 2;
 			int ovalW = GRAPH_POINT_WIDTH;

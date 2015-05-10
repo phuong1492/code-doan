@@ -7,21 +7,18 @@ public class Main {
 		GetData data = new GetData();
 		 //DrawGraph form = new DrawGraph(score);
 		data.SetAllValue();
-		// data.Print_Link();
-		System.out.println(data.N_NODE);
 		// data.Print_List();
 		Graph g = new Graph(data.N_NODE, data.EDGE.size(), data.LISTNODE,
 				data.EDGE, data.DISTANCE);
 		DrawGraph form = new DrawGraph();
 		//Form form = new Form();
-		System.out.println(data.EDGE.size());
 		for (int i = 0; i < g.edge.size(); i++) {
 			g.add(g.node.get(g.edge.get(i).getSource()),
 					g.node.get(g.edge.get(i).getDestination()));
 		}
-		g.displayGraph();
 		System.out.println("Chi phi ban dau: " + g.cost);
 		for (int i = 0; i < data.REQUEST.size(); i++) {
+			System.out.println("\n");
 			data.REQUEST.get(i).String();
 			java.util.List<Node> list = new ArrayList<Node>();
 			java.util.List<Node> list_backup = new ArrayList<Node>();
@@ -30,8 +27,7 @@ public class Main {
 			for (int j = list.size() - 1; j >= 0; j--) {
 				System.out.print(list.get(j) + "\t");
 			}
-			System.out.println();
-			System.out.println("Backup path: ");
+			System.out.println("\nBackup path: ");
 			list_backup = g.dijktra_backup(
 					g.node.get(data.REQUEST.get(i).getSrc()),
 					g.node.get(data.REQUEST.get(i).getDest()), g.weight);
