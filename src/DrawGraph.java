@@ -18,22 +18,26 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class DrawGraph extends JPanel {
-	private static final int PREF_W = 1366;
+	private static final int PREF_W = 1200;
 	private static final int PREF_H = 768;
 	// private static final int BORDER_GAP = 30;
 	private static final Color GRAPH_COLOR = Color.red;
 	private static final Color GRAPH_COLOR_new = Color.blue;
 	private static final Color GRAPH_POINT_COLOR = Color.red;
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f);
-	private static final int GRAPH_POINT_WIDTH = 12;
+	private static final int GRAPH_POINT_WIDTH = 8;
 	private List<Node> nodes;
 	private List<Edge> edges;
 	private boolean edges_new[][];
-
-	public DrawGraph(List<Node> nodes, List<Edge> edges, boolean edges_new[][]) {
+	private static int num_edges_new = 0;
+	private float old_cost, cost;
+	public DrawGraph(List<Node> nodes, List<Edge> edges, boolean edges_new[][], float old_cost, float cost, int n) {
 		this.nodes = nodes;
 		this.edges = edges;
 		this.edges_new = edges_new;
+		this.old_cost = old_cost;
+		this.cost = cost;
+		this.num_edges_new = n;
 	}
 	public DrawGraph(){
 		
@@ -50,7 +54,7 @@ public class DrawGraph extends JPanel {
 	protected void paintComponent(Graphics g) {
 		//super.paintComponent(g);
 
-		g.drawImage(image, 0, 0,1024, 768,  this);
+		g.drawImage(image, 0, 0,1024, 784,  this);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -67,7 +71,7 @@ public class DrawGraph extends JPanel {
 			// int x1 = (int) (i * xScale + BORDER_GAP);
 			// int y1 = (int) ((MAX_SCORE - scores.get(i)) * yScale +
 			// BORDER_GAP);
-			graphPoints.add(new Point(nodes.get(i).getX()+60, nodes.get(i)
+			graphPoints.add(new Point(nodes.get(i).getX(), nodes.get(i)
 					.getY()));
 		}
 		// System.out.println(graphPoints);
@@ -83,8 +87,8 @@ public class DrawGraph extends JPanel {
 		g2.setStroke(GRAPH_STROKE);
 		if(edges == null) return;
 		 for (int i = 0; i < edges.size(); i++) {
-		 g2.drawLine(nodes.get(edges.get(i).getSource()).getX()+60,nodes.get(edges.get(i).getSource()).getY(),
-				 nodes.get(edges.get(i).getDestination()).getX()+60,nodes.get(edges.get(i).getDestination()).getY());
+		 g2.drawLine(nodes.get(edges.get(i).getSource()).getX(),nodes.get(edges.get(i).getSource()).getY(),
+				 nodes.get(edges.get(i).getDestination()).getX(),nodes.get(edges.get(i).getDestination()).getY());
 		//System.out.println(edges);
 //		System.out.println(nodes.get(edges.get(2).getSource()).getX() + " " +nodes.get(edges.get(2).getSource()).getY()+" "+
 //				 nodes.get(edges.get(2).getDestination()).getX()+" "+nodes.get(edges.get(2).getDestination()).getY());
@@ -96,7 +100,8 @@ public class DrawGraph extends JPanel {
 		for (int i = 0; i < nodes.size(); i++) {
 			for (int j = 0; j < nodes.size(); j++) {
 				if (edges_new[i][j]) {
-					g2.drawLine(nodes.get(i).getX()+60, nodes.get(i).getY(), nodes.get(j).getX()+60, nodes.get(j).getY());
+					g2.drawLine(nodes.get(i).getX(), nodes.get(i).getY(), 
+							nodes.get(j).getX(),nodes.get(j).getY());
 				}
 			}
 		}
@@ -110,6 +115,14 @@ public class DrawGraph extends JPanel {
 			int ovalH = GRAPH_POINT_WIDTH;
 			g2.fillOval(x, y, ovalH, ovalW);}
 		}
+		
+		// In thong so
+		g2.drawString("Total point: " + nodes.size(), 1030, 50);
+		g2.drawString("Total old edge: " + edges.size(), 1030,70);
+	//	System.out.println(num_edges_new);
+		g2.drawString("Total new egde: " + num_edges_new/2, 1030, 90);
+		g2.drawString("Costs: " + old_cost, 1030,110);
+		g2.drawString("New costs: " + cost, 1030,130);
 		// ve diem voi ham fillOval(toa do x, toa do y, kich thuoc, kick thuoc)
 	}
 
@@ -119,14 +132,15 @@ public class DrawGraph extends JPanel {
 	}
 
 
-	public void run(final List<Node> nodes, final List<Edge> edges, final boolean edges_new[][]) {
+	public void run(final List<Node> nodes, final List<Edge> edges, final boolean edges_new[][]
+			, final float old_cost, final float cost, final int n) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				BufferedImage myImage = null;
-				DrawGraph mainPanel = new DrawGraph(nodes, edges, edges_new);
+				DrawGraph mainPanel = new DrawGraph(nodes, edges, edges_new, old_cost, cost, n);
 				try {
 					myImage = ImageIO.read(new File(
-							"/home/phuong-hoang/Desktop/Data/Archive/anh.jpg"));
+							"/home/phuong-hoang/Desktop/Data/Archive/anh2.jpg"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -3,19 +3,21 @@ import java.util.ArrayList;
 public class Main {
 	public static void main(String[] args) {
 		// List<Integer> score = new ArrayList<Integer>();
-
+		float old_cost;
+		int num_edges_new = 0 ;
 		GetData data = new GetData();
 		 //DrawGraph form = new DrawGraph(score);
 		data.SetAllValue();
 		// data.Print_List();
 		Graph g = new Graph(data.N_NODE, data.EDGE.size(), data.LISTNODE,
-				data.EDGE, data.DISTANCE);
+				data.EDGE, data.DISTANCE, data.SRG);
 		DrawGraph form = new DrawGraph();
 		//Form form = new Form();
 		for (int i = 0; i < g.edge.size(); i++) {
 			g.add(g.node.get(g.edge.get(i).getSource()),
 					g.node.get(g.edge.get(i).getDestination()));
 		}
+		old_cost = g.cost;
 		System.out.println("Chi phi ban dau: " + g.cost);
 		for (int i = 0; i < data.REQUEST.size(); i++) {
 			System.out.println("\n");
@@ -38,7 +40,13 @@ public class Main {
 		}
 
 		System.out.println("Chi phi toan mang: " + g.cost);
-		form.run(g.node, g.edge, g.new_edge);
+		for (int i = 0; i< g.node.size(); i++) {
+			for (int j = 0; j < g.node.size(); j++) {
+				if(g.new_edge[i][j])
+				num_edges_new +=1;
+			}
+		}
+		form.run(g.node, g.edge, g.new_edge, old_cost, g.cost, num_edges_new);
 	}
 
 }

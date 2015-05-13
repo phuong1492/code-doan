@@ -10,8 +10,9 @@ public class Graph {
 	public float weight[][];
 	public float cost;
 	public boolean new_edge[][];
+	public ArrayList<ArrayList<Edge>> list_srg;
 	public Graph(int v, int e, List<Node> node, List<Edge> edge,
-			float distance[][]) {
+			float distance[][],ArrayList<ArrayList<Edge>> list_srg) {
 		// Only allow positive number of vertices
 		if (v > 0) {
 			this.node = node;
@@ -24,6 +25,7 @@ public class Graph {
 			connected = new boolean[v][v];
 			cost = Cost();
 			new_edge = new boolean[v][v];
+			this.list_srg = list_srg;
 		}
 	}
 
@@ -175,10 +177,35 @@ public class Graph {
 			// System.out.println(i);
 			weight[workpath1.get(i).getId()][workpath1.get(i + 1).getId()] = Float.MAX_VALUE;
 			weight[workpath1.get(i + 1).getId()][workpath1.get(i).getId()] = Float.MAX_VALUE;
+			for (int j = 0; j < list_srg.size(); j++) {
+				for (int k = 0; k < list_srg.get(j).size(); k++) {
+//					System.out.println(workpath1.get(i+1).getId() + "-" + list_srg.get(j).get(k).getSource()
+//							+ "_ " + workpath1.get(i).getId() + "-" + list_srg.get(j).get(k).getDestination());
+					//System.out.println("Nguy co chung : "+ list_srg.get(j).get(k).getSource() + "-" + list_srg.get(j).get(k).getDestination());
+					if(workpath1.get(i+1).getId() == list_srg.get(j).get(k).getSource() && 
+							workpath1.get(i).getId() == list_srg.get(j).get(k).getDestination()){
+						for (int a = 0; a < list_srg.size(); a++) {
+							for (int b = 0; b < list_srg.get(a).size(); b++) {
+								weight[list_srg.get(a).get(b).getSource()][list_srg.get(a).get(b).getDestination()] = Float.MAX_VALUE;
+								weight[list_srg.get(a).get(b).getDestination()][list_srg.get(a).get(b).getSource()] = Float.MAX_VALUE;
+							}	
+						}
+					}
+				}
+			}
 			// System.out.println(workpath1.get(i).getId() + " " +
 			// workpath1.get(i+1).getId() + " "+
 			// weight[workpath1.get(i).getId()][workpath1.get(i+1).getId()]);
+			
 		}
+//		System.out.println("Ma tran lam viec voi backup bath");
+//		for (int i = 0; i < node.size(); i++) {
+//			for (int j = 0; j < node.size(); j++) {
+//				System.out.print(weight[i][j] + "\t");
+//				}
+//			System.out.println();
+//			}
+		
 		for (int i = 0; i < node.size(); i++) {
 			for (int j = 0; j < node.size(); j++) {
 				if (weight[i][j] != Float.MAX_VALUE && connected[i][j]) {

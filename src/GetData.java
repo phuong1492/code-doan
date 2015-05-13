@@ -11,6 +11,7 @@ public class GetData {
 	public float[][] DISTANCE;
 	public List<Edge> EDGE;
 	public List<Request> REQUEST;
+	public ArrayList<ArrayList<Edge>> SRG;
 
 	public void setEmptyAll() {
 		N_NODE = 0;
@@ -23,7 +24,7 @@ public class GetData {
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(
-						"/home/phuong-hoang/Desktop/Data/Archive/test1.txt"));
+						"/home/phuong-hoang/Desktop/Data/Archive/test.txt"));
 			} catch (FileNotFoundException exc) {
 				System.out.println("File not found!");
 				return;
@@ -32,6 +33,7 @@ public class GetData {
 			LISTNODE = readPosition(br, N_NODE);
 			EDGE = readLink(br, N_NODE);
 			REQUEST = readRequests(br);
+			SRG = readSRG(br);
 			DISTANCE = creatMatrixDistance(N_NODE, LISTNODE);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -156,6 +158,42 @@ public class GetData {
 		}
 		br.readLine(); // read this ];
 		return request;
+	}
+	private static ArrayList<ArrayList<Edge>> readSRG(BufferedReader br)
+			throws IOException {
+		ArrayList<Edge> edge = new ArrayList<Edge>();
+		ArrayList<ArrayList<Edge>> list_edge = new ArrayList<ArrayList<Edge>>();
+		String line = " ";
+		// br.readLine(); // read this R=[
+		line = br.readLine();
+		System.out.println(line);
+		while (!line.equals("]")) {
+			line = br.readLine();
+			System.out.println(line);
+			while(!line.equals("}")){
+				String coordinates = line.substring(0, line.length() - 1);
+				int splitpoint = coordinates.indexOf(',');
+			// String s = coordinates.substring(0, a);
+				int x = Integer.parseInt(coordinates.substring(0, splitpoint));
+				int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
+				//System.out.println(x + "-" + y);
+			// System.out.println(y);
+				Edge ed  = new Edge("", x, y);
+				edge.add(ed);
+				line = br.readLine();
+			//	System.out.println(line);
+				}
+			//	System.out.println(line);
+				list_edge.add(edge);
+//				line = br.readLine();
+				line = br.readLine();
+//				System.out.println(line);
+		}
+//		for (int i = 0; i < request.size(); i++) {
+//			System.out.println(request.get(i).getSrc() + " "
+//					+ request.get(i).getDest());
+			br.readLine(); // read this ];
+		return list_edge;
 	}
 
 	public static class Request {
