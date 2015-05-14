@@ -310,7 +310,7 @@ public class Graph {
 			System.out.println();
 		}
 	}
-	public void print_distance_copy() {
+	public void print_distance_new() {
 		for (int i = 0; i < node.size(); i++) {
 			for (int j = 0; j < node.size(); j++) {
 				System.out.printf("%.2f \t", weight[i][j]);

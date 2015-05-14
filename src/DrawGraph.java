@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,6 +8,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +32,7 @@ public class DrawGraph extends JPanel {
 	private List<Node> nodes;
 	private List<Edge> edges;
 	private boolean edges_new[][];
-	private static int num_edges_new = 0;
+	private int num_edges_new = 0;
 	private float old_cost, cost;
 	public DrawGraph(List<Node> nodes, List<Edge> edges, boolean edges_new[][], float old_cost, float cost, int n) {
 		this.nodes = nodes;
@@ -38,6 +41,13 @@ public class DrawGraph extends JPanel {
 		this.old_cost = old_cost;
 		this.cost = cost;
 		this.num_edges_new = n;
+//		JButton bChange = new JButton("Click Me!"); // construct a JButton
+//		    add( bChange ); 
+//		    bChange.setBounds(100, 120, 10, 20);
+//		 JButton button = new JButton("hello agin1");
+//		 button.setLayout(null);
+//		 button.setBounds(0, 500, 100, 100);
+//		 add(button);
 	}
 	public DrawGraph(){
 		
@@ -82,6 +92,16 @@ public class DrawGraph extends JPanel {
 		// g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() -
 		// BORDER_GAP, getHeight() - BORDER_GAP);
 		// Ve duong di
+//		List<Node> a = new ArrayList<Node>();
+//		a.add(new Node(342, 234));
+//		a.add(new Node(123, 573));
+//		List<List<Node>> a_list = new ArrayList<List<Node>>();
+//		a_list.add(a);
+//		for (int i = 0; i < a_list.size(); i++) {
+//			for (int j = 0; j < a_list.get(i).size(); j++) {
+//				
+//			}
+//		}
 		Stroke oldStroke = g2.getStroke();
 		g2.setColor(GRAPH_COLOR);
 		g2.setStroke(GRAPH_STROKE);
@@ -117,12 +137,16 @@ public class DrawGraph extends JPanel {
 		}
 		
 		// In thong so
-		g2.drawString("Total point: " + nodes.size(), 1030, 50);
-		g2.drawString("Total old edge: " + edges.size(), 1030,70);
-	//	System.out.println(num_edges_new);
-		g2.drawString("Total new egde: " + num_edges_new/2, 1030, 90);
-		g2.drawString("Costs: " + old_cost, 1030,110);
-		g2.drawString("New costs: " + cost, 1030,130);
+		g2.drawString("Number of nodes: " + nodes.size(), 1030, 50);
+		g2.drawString("Number of initial links: " + edges.size(), 1030,70);
+//		System.out.println(num_edges_new);
+		g2.drawString("Initial network cost: ", 1030,90);
+		g2.drawString(" "+ old_cost, 1030, 110);
+		g2.drawString("Number of addition links: "+ num_edges_new, 1030, 130);
+		g2.drawString("Additional network cost: ", 1030,150);
+		g2.drawString(" " + (cost-old_cost), 1030, 170);
+		g2.drawString("Total network cost: ", 1030,190);
+		g2.drawString( " "+ cost, 1030, 210);
 		// ve diem voi ham fillOval(toa do x, toa do y, kich thuoc, kick thuoc)
 	}
 
@@ -131,16 +155,22 @@ public class DrawGraph extends JPanel {
 		return new Dimension(PREF_W, PREF_H);
 	}
 
-
+	private void open_file() throws IOException{
+		File file = new File("/home/phuong-hoang/Desktop/Data/result/OutFile.txt");
+		  Desktop dt = Desktop.getDesktop();
+		    dt.open(file);
+	}
+	
 	public void run(final List<Node> nodes, final List<Edge> edges, final boolean edges_new[][]
 			, final float old_cost, final float cost, final int n) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				
 				BufferedImage myImage = null;
 				DrawGraph mainPanel = new DrawGraph(nodes, edges, edges_new, old_cost, cost, n);
 				try {
 					myImage = ImageIO.read(new File(
-							"/home/phuong-hoang/Desktop/Data/Archive/anh2.jpg"));
+							"/home/phuong-hoang/Desktop/Data/Archive/anh.jpg"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -150,7 +180,24 @@ public class DrawGraph extends JPanel {
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.getContentPane().add(mainPanel);
 				frame.pack();
+				frame.setLayout(null);
 				frame.setLocationByPlatform(true);
+				 JButton button = new JButton("Show result");
+			     button.setSize(new Dimension(100, 30));
+			     button.setBounds(1030, 10, 120, 30);
+			     frame.getContentPane().add(button);
+			     button.addActionListener(new ActionListener() { 
+			    	    public void actionPerformed(ActionEvent e) { 
+			    	        try {
+								open_file();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+			    	    } 
+			    	});
+//				  button.addActionListener (new Action1());
+//				  
 //				frame.setSize(500,500);
 //				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //				ImageIcon image = new ImageIcon("/home/phuong-hoang/Desktop/Data/Archive/anh.jpg");

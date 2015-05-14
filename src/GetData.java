@@ -24,7 +24,7 @@ public class GetData {
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(
-						"/home/phuong-hoang/Desktop/Data/Archive/test.txt"));
+						"/home/phuong-hoang/Desktop/Data/Archive/test1.txt"));
 			} catch (FileNotFoundException exc) {
 				System.out.println("File not found!");
 				return;
@@ -34,6 +34,12 @@ public class GetData {
 			EDGE = readLink(br, N_NODE);
 			REQUEST = readRequests(br);
 			SRG = readSRG(br);
+//			for (int i = 0; i < SRG.size(); i++) {
+//				for (int j = 0; j < SRG.get(i).size(); j++) {
+//					System.out.print(SRG.get(i).get(j).getDestination()+ " ");
+//				}
+//				System.out.println();
+//			}
 			DISTANCE = creatMatrixDistance(N_NODE, LISTNODE);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -161,13 +167,13 @@ public class GetData {
 	}
 	private static ArrayList<ArrayList<Edge>> readSRG(BufferedReader br)
 			throws IOException {
-		ArrayList<Edge> edge = new ArrayList<Edge>();
 		ArrayList<ArrayList<Edge>> list_edge = new ArrayList<ArrayList<Edge>>();
 		String line = " ";
 		// br.readLine(); // read this R=[
 		line = br.readLine();
-		System.out.println(line);
+		System.out.println(" Read SRG: ");
 		while (!line.equals("]")) {
+			ArrayList<Edge> edge = new ArrayList<Edge>();
 			line = br.readLine();
 			System.out.println(line);
 			while(!line.equals("}")){
@@ -176,7 +182,7 @@ public class GetData {
 			// String s = coordinates.substring(0, a);
 				int x = Integer.parseInt(coordinates.substring(0, splitpoint));
 				int y = Integer.parseInt(coordinates.substring(splitpoint + 1));
-				//System.out.println(x + "-" + y);
+				System.out.println(x + "-" + y);
 			// System.out.println(y);
 				Edge ed  = new Edge("", x, y);
 				edge.add(ed);
