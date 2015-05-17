@@ -1,14 +1,18 @@
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// List<Integer> score = new ArrayList<Integer>();
+		
 		try {
 			PrintStream out = new PrintStream(new FileOutputStream("/home/phuong-hoang/Desktop/Data/result/OutFile.txt"));
-
+			test t = new test();
+			t.GetValue();
 			float old_cost;
 			int num_edges_new = 0;
 			GetData data = new GetData();
@@ -76,7 +80,7 @@ public class Main {
 			out.println("Total network cost: " + g.cost);
 //			System.out.println(num_edges_new);
 			form.run(g.node, g.edge, g.new_edge, old_cost, g.cost,
-					num_edges_new);
+					num_edges_new, t.LISTNODE, t.Path);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

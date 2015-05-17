@@ -24,7 +24,7 @@ public class GetData {
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(
-						"/home/phuong-hoang/Desktop/Data/Archive/test1.txt"));
+						"/home/phuong-hoang/Desktop/Data/Archive/test.txt"));
 			} catch (FileNotFoundException exc) {
 				System.out.println("File not found!");
 				return;
